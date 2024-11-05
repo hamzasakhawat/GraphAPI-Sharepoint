@@ -1,0 +1,87 @@
+﻿@{
+    var alerts = TempData.ContainsKey(Migration_Tool_GraphAPI.Models.Alert.AlertKey)
+        ? (List<Migration_Tool_GraphAPI.Models.Alert>)TempData[Migration_Tool_GraphAPI.Models.Alert.AlertKey]
+        : new List<Migration_Tool_GraphAPI.Models.Alert>();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASP.NET Graph Tutorial</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+          integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+          crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container">
+            @Html.ActionLink("Migratietool Dashboard", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "Home", new { area = "" },
+                            new { @class = ViewBag.Current == "Home" ? "nav-link active" : "nav-link" })
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    @if (User.Identity.IsAuthenticated && ViewBag.User != null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if (!string.IsNullOrEmpty(ViewBag.User.Avatar))
+                                {
+                                    <img src="@ViewBag.User.Avatar" class="rounded-circle" style="width: 32px; margin-right: 8px;">
+                                }
+                                else
+                                {
+                                    <i class="far fa-user-circle fa-lg" style="margin-right: 8px;"></i>
+                                }
+                                @ViewBag.User.DisplayName
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <h6 class="dropdown-item-text">@ViewBag.User.DisplayName</h6>
+                                <p class="dropdown-item-text text-muted">@ViewBag.User.Email</p>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="@Url.Action("SignOut", "Account")">Sign Out</a>
+                            </div>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Aanmelden", "SignIn", "Account", new { area = "" }, new { @class = "nav-link" })
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main role="main" class="container">
+        @foreach (var alert in alerts)
+        {
+            <div class="alert alert-danger" role="alert">
+                <p class="mb-3">@alert.Message</p>
+                @if (!string.IsNullOrEmpty(alert.Debug))
+                {
+                    <pre class="alert-pre border bg-light p-2"><code>@alert.Debug</code></pre>
+                }
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

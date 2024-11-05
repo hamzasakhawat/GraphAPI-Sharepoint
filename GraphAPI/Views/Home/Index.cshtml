@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Current = "Home";
+}
+
+<div class="jumbotron text-center" style="background-color: #f5f5f5; padding: 40px; border-radius: 10px;">
+    <h1 style="font-size: 2.5em; color: #0078d4;">
+        <i class="fas fa-cloud-upload-alt" style="margin-right: 10px;"></i>Migratie Automation met Microsoft Graph
+    </h1>
+    <p class="lead" style="font-size: 1.2em; color: #5a5a5a; margin-top: 20px;">
+        Welkom bij de Migratietool voor Klantenbeheer. Beheer klantgegevens eenvoudig en voer migraties soepel en efficiënt uit.
+    </p>
+
+    @if (Request.IsAuthenticated)
+    {
+        <div style="margin-top: 30px;">
+            <h4 style="color: #0078d4;">Welkom, @ViewBag.User.DisplayName!</h4>
+            <p style="font-size: 1.1em;">
+                Klaar om klantgegevens moeiteloos te beheren en migreren? Onze tool maakt het eenvoudig!
+            </p>
+            <a href="@Url.Action("Index", "Dashboard")" class="btn btn-success btn-lg" style="margin-top: 15px;">
+                <i class="fas fa-tachometer-alt"></i> Ga naar Dashboard
+            </a>
+        </div>
+    }
+    else
+    {
+        <p style="margin-top: 20px;">
+            <a href="@Url.Action("SignIn", "Account")" class="btn btn-primary btn-lg">
+                <i class="fas fa-sign-in-alt"></i> Aanmelden met Microsoft-account
+            </a>
+        </p>
+    }
+</div>

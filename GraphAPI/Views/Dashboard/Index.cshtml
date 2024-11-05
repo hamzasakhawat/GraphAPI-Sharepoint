@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+<link rel="stylesheet" href="~/Content/Site.css" />
+<div class="dashboard-container">
+    <h2>Dashboard</h2>
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success text-center">@ViewBag.Message</div>
+    }
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger text-center">@ViewBag.Error</div>
+    }
+
+    <form action="/Dashboard/StartTransfer" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Select file to transfer:</label>
+            <input type="file" name="file" class="form-control" required />
+        </div>
+
+        <div class="form-group">
+            <label for="destinationUrl">Destination URL:</label>
+            <input type="text" name="destinationUrl" class="form-control" placeholder="Enter SharePoint destination URL" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Start Transfer</button>
+    </form>
+</div>
+
