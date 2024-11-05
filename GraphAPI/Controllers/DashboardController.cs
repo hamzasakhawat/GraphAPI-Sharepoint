@@ -44,7 +44,7 @@ namespace Migration_Tool_GraphAPI.Controllers
                 var sharePointUri = new Uri(destinationUrl);
                 var site = await graphClient
                     .Sites
-                    .GetByPath("/sites/mmmmcc", "collaborationfactory.sharepoint.com")
+                    .GetByPath(path, [hostURL])
                     .Request()
                     .GetAsync();
 
